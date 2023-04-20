@@ -1,8 +1,10 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import {Endpoints} from "../common/Endpoints";
+import {setupLogs} from "./util/setupLogs";
 
 dotenv.config();
+setupLogs();
 
 const app = express();
 const port = process.env.PORT || 16000;
@@ -16,7 +18,6 @@ app.get(Endpoints.BE_REAL, (_, res) => {
     res.send("test!");
 });
 
-// API
 app.listen(port, () => {
     console.log(`Active on port ${port}!`);
 });
