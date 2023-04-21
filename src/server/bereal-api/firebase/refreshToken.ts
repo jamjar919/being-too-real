@@ -1,27 +1,34 @@
 import {RefreshTokenResponse} from "./type/RefreshTokenResponse";
+import fetch, {Response} from "node-fetch";
 
-const fetch = require('node-fetch');
+const refreshToken = (): Promise<RefreshTokenResponse> => {
+    const apiKey = process.env.GOOGLE_API_TOKEN;
+    const currentRefreshToken = process.env.REFRESH_TOKEN;
 
-const apiKey = '<your Firebase API key>';
-const refreshTokenUrl = `https://securetoken.googleapis.com/v1/token?key=${apiKey}`;
+    if (!apiKey) {
+        throw new Error("Environment variable GOOGLE_API_TOKEN missing!")
+    }
 
-const refreshToken = (refreshToken: string): Promise<RefreshTokenResponse> => {
+    if (!currentRefreshToken) {
+        throw new Error("Environment variable REFRESH_TOKEN missing!")
+    }
+
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             grant_type: 'refresh_token',
-            refresh_token: refreshToken
+            refresh_token: currentRefreshToken
         })
     };
 
-    return fetch<RefreshTokenResponse>(refreshTokenUrl, requestOptions)
-        .then(response => response.json())
-        .then(data => {
+    return fetch(`https://securetoken.googleapis.com/v1/token?key=${apiKey}`, requestOptions)
+        .then((response: Response) => response.json() as Promise<RefreshTokenResponse>)
+        .then((data: RefreshTokenResponse) => {
             console.log('Token refreshed successfully.');
-            return data.access_token;
+            return data;
         })
-        .catch(error => {
+        .catch((error: Error) => {
             console.log('Error refreshing token:', error);
             throw error;
         });
