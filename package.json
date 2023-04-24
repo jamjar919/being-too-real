@@ -2,11 +2,31 @@
   "name": "being-too-real",
   "version": "1.0.0",
   "description": "Man, things just got real.",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "https://github.com/jamjar919/being-too-real.git",
   "author": "James Paterson",
   "license": "None",
+  "scripts": {
+    "build": "npm-run-all assemble test",
+    "assemble": "npm-run-all build:server",
+    "test": "jest",
+    "start": "node ./dist/server.js",
+    "build:server": "npx webpack --config webpack.config.js",
+    "build:server:dev": "npx webpack -w --config webpack.config.js --mode=development"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.7.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "graphql": "^16.6.0",
+    "node-fetch": "^3.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
   "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
@@ -20,22 +40,8 @@
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.13.3"
   },
-  "scripts": {
-    "build": "npm-run-all assemble test",
-    "assemble": "npm-run-all build:server build:client",
-    "test": "jest",
-    "start": "node ./dist/server.js",
-    "build:server": "npx webpack --config webpack.config.server.js",
-    "build:server:dev": "npx webpack -w --config webpack.config.server.js --mode=development"
-  },
-  "dependencies": {
-    "express": "^4.18.2",
-    "node-fetch": "^3.3.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
   "engines": {
-    "node": "16.14.2"
+    "node": "18.16.0"
   },
   "babel": {
     "presets": [

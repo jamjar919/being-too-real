@@ -1,4 +1,4 @@
-import {RefreshTokenResponse} from "./type/RefreshTokenResponse";
+import {RefreshTokenResponse} from "./type/RefreshTokenResponse.js";
 import fetch, {Response} from "node-fetch";
 
 const refreshToken = (): Promise<RefreshTokenResponse> => {
@@ -28,10 +28,6 @@ const refreshToken = (): Promise<RefreshTokenResponse> => {
             console.log('Token refreshed successfully.');
             return data;
         })
-        .catch((error: Error) => {
-            console.log('Error refreshing token:', error);
-            throw error;
-        });
 };
 
 export { refreshToken }

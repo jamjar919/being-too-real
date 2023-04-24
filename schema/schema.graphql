@@ -1,0 +1,23 @@
+scalar Username
+
+type HistoryEntry {
+    id: ID!
+    location: Location
+    takenAt: Int!
+}
+
+type User {
+    username: Username!
+    profilePicture: String!
+    history: [HistoryEntry]!
+}
+
+type Location {
+    latitude: Float!,
+    longitude: Float!
+}
+
+type Query {
+    user(username: Username!): User,
+    historyEntry(id: ID!): HistoryEntry
+}
