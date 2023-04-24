@@ -11,6 +11,8 @@ import { readFileSync } from 'fs';
 import {Endpoints} from "./common/Endpoints.js";
 import {getFriendFeed} from "./bereal-api/getFriendFeed.js";
 import {setupLogs} from "./util/setupLogs.js";
+import {Context} from "./graphql/Context.js";
+import {resolvers} from "./graphql/resolvers";
 
 dotenv.config();
 setupLogs();
@@ -19,15 +21,11 @@ const app = express();
 const httpServer = http.createServer(app);
 const port = process.env.PORT || 16000;
 
-interface MyContext {
-    token?: string;
-}
+const typeDefs = readFileSync('./src/graphql/schema.graphql', { encoding: 'utf-8' });
 
-const typeDefs = readFileSync('./schema/schema.graphql', { encoding: 'utf-8' });
-
-const apolloServer = new ApolloServer<MyContext>({
+const apolloServer = new ApolloServer<Context>({
     typeDefs,
-    resolvers: [],
+    resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 
@@ -38,8 +36,6 @@ app.use(
     '/graphql',
     cors<CorsRequest>(),
     bodyParser.json(),
-    // expressMiddleware accepts the same arguments:
-    // an Apollo Server instance and optional configuration options
     expressMiddleware(apolloServer, {
         context: async (integrationContext: ExpressContextFunctionArgument) => {
             const { req } = integrationContext;

@@ -12,7 +12,8 @@
     "test": "jest",
     "start": "node ./dist/server.js",
     "build:server": "npx webpack --config webpack.config.js",
-    "build:server:dev": "npx webpack -w --config webpack.config.js --mode=development"
+    "build:server:dev": "npx webpack -w --config webpack.config.js --mode=development",
+    "graphql": "graphql-codegen --config graphql-codegen.yml"
   },
   "dependencies": {
     "@apollo/server": "^4.7.0",
@@ -26,6 +27,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",
+    "@graphql-codegen/cli": "^3.3.1",
+    "@graphql-codegen/typescript": "^3.0.4",
+    "@graphql-codegen/typescript-resolvers": "^3.2.1",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
     "@types/react": "^18.0.37",
