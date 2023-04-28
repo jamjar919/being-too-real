@@ -1,5 +1,5 @@
 enum BeRealEndpoint {
-    FRIEND_FEED = 'feeds/friends-v1',
+    FRIEND_FEED = 'feeds/friends',
     MEMORIES = 'feeds/memories'
 }
 

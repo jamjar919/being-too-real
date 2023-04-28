@@ -1,28 +1,26 @@
 scalar Username
 
-type HistoryEntry {
-    id: ID!
-    location: Location
-    takenAt: Int!
-}
-
-type User {
-    username: Username!
-    profilePicture: String!
-    history: [HistoryEntry]!
-}
-
 type Location {
-    latitude: Float!,
+    latitude: Float!
     longitude: Float!
 }
 
-type Memories {
+type MemoryImage {
+    url: String!
+    width: Int!
+    height: Int!
+}
+
+type Memory {
     id: ID!
+    thumbnail: MemoryImage!
+    primary: MemoryImage!
+    secondary: MemoryImage!
+    isLate: Boolean!
+    memoryDay: String!
+    location: Location
 }
 
 type Query {
-    user(username: Username!): User,
-    historyEntry(id: ID!): HistoryEntry,
-    memories: Memories
+    memories: [Memory]!
 }

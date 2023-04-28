@@ -5,7 +5,6 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -16,46 +15,33 @@ export type Scalars = {
   Username: any;
 };
 
-export type HistoryEntry = {
-  __typename?: 'HistoryEntry';
-  id: Scalars['ID'];
-  location?: Maybe<Location>;
-  takenAt: Scalars['Int'];
-};
-
 export type Location = {
   __typename?: 'Location';
   latitude: Scalars['Float'];
   longitude: Scalars['Float'];
 };
 
-export type Memories = {
-  __typename?: 'Memories';
+export type Memory = {
+  __typename?: 'Memory';
   id: Scalars['ID'];
+  isLate: Scalars['Boolean'];
+  location?: Maybe<Location>;
+  memoryDay: Scalars['String'];
+  primary: MemoryImage;
+  secondary: MemoryImage;
+  thumbnail: MemoryImage;
+};
+
+export type MemoryImage = {
+  __typename?: 'MemoryImage';
+  height: Scalars['Int'];
+  url: Scalars['String'];
+  width: Scalars['Int'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  historyEntry?: Maybe<HistoryEntry>;
-  memories?: Maybe<Memories>;
-  user?: Maybe<User>;
-};
-
-
-export type QueryHistoryEntryArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type QueryUserArgs = {
-  username: Scalars['Username'];
-};
-
-export type User = {
-  __typename?: 'User';
-  history: Array<Maybe<HistoryEntry>>;
-  profilePicture: Scalars['String'];
-  username: Scalars['Username'];
+  memories: Array<Maybe<Memory>>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -132,14 +118,13 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
-  HistoryEntry: ResolverTypeWrapper<HistoryEntry>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Location: ResolverTypeWrapper<Location>;
-  Memories: ResolverTypeWrapper<Memories>;
+  Memory: ResolverTypeWrapper<Memory>;
+  MemoryImage: ResolverTypeWrapper<MemoryImage>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
-  User: ResolverTypeWrapper<User>;
   Username: ResolverTypeWrapper<Scalars['Username']>;
 }>;
 
@@ -147,22 +132,14 @@ export type ResolversTypes = ResolversObject<{
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
   Float: Scalars['Float'];
-  HistoryEntry: HistoryEntry;
   ID: Scalars['ID'];
   Int: Scalars['Int'];
   Location: Location;
-  Memories: Memories;
+  Memory: Memory;
+  MemoryImage: MemoryImage;
   Query: {};
   String: Scalars['String'];
-  User: User;
   Username: Scalars['Username'];
-}>;
-
-export type HistoryEntryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['HistoryEntry'] = ResolversParentTypes['HistoryEntry']> = ResolversObject<{
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  location?: Resolver<Maybe<ResolversTypes['Location']>, ParentType, ContextType>;
-  takenAt?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type LocationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Location'] = ResolversParentTypes['Location']> = ResolversObject<{
@@ -171,22 +148,26 @@ export type LocationResolvers<ContextType = Context, ParentType extends Resolver
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type MemoriesResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Memories'] = ResolversParentTypes['Memories']> = ResolversObject<{
+export type MemoryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Memory'] = ResolversParentTypes['Memory']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  isLate?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  location?: Resolver<Maybe<ResolversTypes['Location']>, ParentType, ContextType>;
+  memoryDay?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  primary?: Resolver<ResolversTypes['MemoryImage'], ParentType, ContextType>;
+  secondary?: Resolver<ResolversTypes['MemoryImage'], ParentType, ContextType>;
+  thumbnail?: Resolver<ResolversTypes['MemoryImage'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type MemoryImageResolvers<ContextType = Context, ParentType extends ResolversParentTypes['MemoryImage'] = ResolversParentTypes['MemoryImage']> = ResolversObject<{
+  height?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  width?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  historyEntry?: Resolver<Maybe<ResolversTypes['HistoryEntry']>, ParentType, ContextType, RequireFields<QueryHistoryEntryArgs, 'id'>>;
-  memories?: Resolver<Maybe<ResolversTypes['Memories']>, ParentType, ContextType>;
-  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'username'>>;
-}>;
-
-export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
-  history?: Resolver<Array<Maybe<ResolversTypes['HistoryEntry']>>, ParentType, ContextType>;
-  profilePicture?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  username?: Resolver<ResolversTypes['Username'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+  memories?: Resolver<Array<Maybe<ResolversTypes['Memory']>>, ParentType, ContextType>;
 }>;
 
 export interface UsernameScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Username'], any> {
@@ -194,11 +175,10 @@ export interface UsernameScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 }
 
 export type Resolvers<ContextType = Context> = ResolversObject<{
-  HistoryEntry?: HistoryEntryResolvers<ContextType>;
   Location?: LocationResolvers<ContextType>;
-  Memories?: MemoriesResolvers<ContextType>;
+  Memory?: MemoryResolvers<ContextType>;
+  MemoryImage?: MemoryImageResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
-  User?: UserResolvers<ContextType>;
   Username?: GraphQLScalarType;
 }>;
 
