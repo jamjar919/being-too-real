@@ -8,10 +8,10 @@ import cors, { CorsRequest } from 'cors';
 import http from "http";
 import { readFileSync } from 'fs';
 
-import {Endpoints} from "./common/Endpoints.js";
-import {setupLogs} from "./util/setupLogs.js";
-import {Context} from "./graphql/Context.js";
-import {resolvers} from "./graphql/resolvers";
+import {Endpoints} from "./common/Endpoints";
+import {setupLogs} from "./util/setupLogs";
+import {Context} from "../graphql/Context";
+import {resolvers} from "../graphql/resolvers";
 import {getFriendFeed} from "./bereal-api/api";
 
 dotenv.config();

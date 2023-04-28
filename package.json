@@ -11,8 +11,8 @@
     "assemble": "npm-run-all build:server",
     "test": "jest",
     "start": "node ./dist/server.js",
-    "build:server": "npx webpack --config webpack.config.js",
-    "build:server:dev": "npx webpack -w --config webpack.config.js --mode=development",
+    "build:server": "npx webpack --config webpack.server.config.js",
+    "build:server:dev": "npx webpack -w --config webpack.server.config.js --mode=development",
     "graphql": "graphql-codegen --config graphql-codegen.yml"
   },
   "dependencies": {

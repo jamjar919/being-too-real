@@ -1,4 +1,4 @@
-import {RefreshTokenResponse} from "./type/RefreshTokenResponse.js";
+import {RefreshTokenResponse} from "./type/RefreshTokenResponse";
 import fetch, {Response} from "node-fetch";
 
 const refreshFirebaseToken = (): Promise<RefreshTokenResponse> => {

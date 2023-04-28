@@ -8,7 +8,7 @@ const include = [
 ];
 
 module.exports = {
-    entry: "./src/index.ts",
+    entry: "./src/server/index.ts",
     target: "node", // support native modules
     devtool: "inline-source-map",
     output: {
