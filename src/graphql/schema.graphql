@@ -17,7 +17,12 @@ type Location {
     longitude: Float!
 }
 
+type Memories {
+    id: ID!
+}
+
 type Query {
     user(username: Username!): User,
-    historyEntry(id: ID!): HistoryEntry
+    historyEntry(id: ID!): HistoryEntry,
+    memories: Memories
 }

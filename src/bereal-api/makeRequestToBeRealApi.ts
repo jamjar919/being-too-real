@@ -1,16 +1,20 @@
-import {BeRealFriendFeedResponse} from "./type/BeRealFriendFeedResponse.js";
-
 import fetch, {Response} from "node-fetch";
-import {RefreshTokenResponse} from "./firebase/type/RefreshTokenResponse.js";
-import {refreshToken} from "./firebase/refreshToken.js";
+import {refreshBeRealToken} from "./auth/refreshBeRealToken";
+import {BeRealRefreshTokenResponse} from "./auth/type/BeRealRefreshTokenResponse";
+import {BeRealEndpoint} from "./type/BeRealEndpoint";
 
 // Maximum number of tries to hit the endpoint
 const MAX_TRIES = 5;
 
+const BEREAL_API_URL = 'https://mobile.bereal.com/api/'
+
 // Access token for the BeReal servers.
 let accessToken: string | null = null;
 
-const getFriendFeed = (tries = 0): Promise<BeRealFriendFeedResponse> => {
+const makeRequestToBeRealApi = <ResponseType>(
+    endpoint: BeRealEndpoint,
+    tries = 0
+): Promise<ResponseType> => {
     if (tries > MAX_TRIES) {
         throw new Error("Maximum tries exceeded!")
     }
@@ -30,21 +34,21 @@ const getFriendFeed = (tries = 0): Promise<BeRealFriendFeedResponse> => {
         headers: headers,
     };
 
-    return fetch("https://mobile.bereal.com/api/feeds/friends", requestOptions)
+    return fetch(BEREAL_API_URL + endpoint, requestOptions)
         .then((response: Response) => {
             if (response.status === 401) {
                 // refresh the token and try again
                 console.log("Received a 401 from the server")
-                return refreshToken().then((refreshResponse: RefreshTokenResponse) => {
+                return refreshBeRealToken().then((refreshResponse: BeRealRefreshTokenResponse) => {
                     accessToken = refreshResponse.access_token;
-                    return getFriendFeed(tries + 1)
+                    return makeRequestToBeRealApi(endpoint,tries + 1)
                 });
             }
 
-            console.log("Got data")
+            console.log("Got data for " + endpoint)
 
-            return response.json() as Promise<BeRealFriendFeedResponse>;
+            return response.json() as Promise<ResponseType>;
         })
 }
 
-export { getFriendFeed }
+export { makeRequestToBeRealApi }

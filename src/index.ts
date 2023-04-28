@@ -9,10 +9,10 @@ import http from "http";
 import { readFileSync } from 'fs';
 
 import {Endpoints} from "./common/Endpoints.js";
-import {getFriendFeed} from "./bereal-api/getFriendFeed.js";
 import {setupLogs} from "./util/setupLogs.js";
 import {Context} from "./graphql/Context.js";
 import {resolvers} from "./graphql/resolvers";
+import {getFriendFeed} from "./bereal-api/api";
 
 dotenv.config();
 setupLogs();

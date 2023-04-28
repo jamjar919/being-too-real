@@ -1,9 +1,9 @@
 import {RefreshTokenResponse} from "./type/RefreshTokenResponse.js";
 import fetch, {Response} from "node-fetch";
 
-const refreshToken = (): Promise<RefreshTokenResponse> => {
+const refreshFirebaseToken = (): Promise<RefreshTokenResponse> => {
     const apiKey = process.env.GOOGLE_API_TOKEN;
-    const currentRefreshToken = process.env.REFRESH_TOKEN;
+    const currentRefreshToken = process.env.FIREBASE_REFRESH_TOKEN;
 
     if (!apiKey) {
         throw new Error("Environment variable GOOGLE_API_TOKEN missing!")
@@ -30,4 +30,4 @@ const refreshToken = (): Promise<RefreshTokenResponse> => {
         })
 };
 
-export { refreshToken }
+export { refreshFirebaseToken }

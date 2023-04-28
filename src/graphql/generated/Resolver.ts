@@ -29,9 +29,15 @@ export type Location = {
   longitude: Scalars['Float'];
 };
 
+export type Memories = {
+  __typename?: 'Memories';
+  id: Scalars['ID'];
+};
+
 export type Query = {
   __typename?: 'Query';
   historyEntry?: Maybe<HistoryEntry>;
+  memories?: Maybe<Memories>;
   user?: Maybe<User>;
 };
 
@@ -130,6 +136,7 @@ export type ResolversTypes = ResolversObject<{
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Location: ResolverTypeWrapper<Location>;
+  Memories: ResolverTypeWrapper<Memories>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
   User: ResolverTypeWrapper<User>;
@@ -144,6 +151,7 @@ export type ResolversParentTypes = ResolversObject<{
   ID: Scalars['ID'];
   Int: Scalars['Int'];
   Location: Location;
+  Memories: Memories;
   Query: {};
   String: Scalars['String'];
   User: User;
@@ -163,8 +171,14 @@ export type LocationResolvers<ContextType = Context, ParentType extends Resolver
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type MemoriesResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Memories'] = ResolversParentTypes['Memories']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   historyEntry?: Resolver<Maybe<ResolversTypes['HistoryEntry']>, ParentType, ContextType, RequireFields<QueryHistoryEntryArgs, 'id'>>;
+  memories?: Resolver<Maybe<ResolversTypes['Memories']>, ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'username'>>;
 }>;
 
@@ -182,6 +196,7 @@ export interface UsernameScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 export type Resolvers<ContextType = Context> = ResolversObject<{
   HistoryEntry?: HistoryEntryResolvers<ContextType>;
   Location?: LocationResolvers<ContextType>;
+  Memories?: MemoriesResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   Username?: GraphQLScalarType;
