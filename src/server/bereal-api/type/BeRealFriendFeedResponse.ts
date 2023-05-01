@@ -1,4 +1,4 @@
-export interface BeRealFriendFeedResponse {
+export type BeRealFriendFeedResponse = Array<{
     id: string;
     notificationID: string;
     ownerID: string;
@@ -27,7 +27,7 @@ export interface BeRealFriendFeedResponse {
     screenshotsV2?: (null)[] | null;
     caption?: string | null;
     visibility?: (string)[] | null;
-}
+}>
 export interface User {
     id: string;
     username: string;

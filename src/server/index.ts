@@ -11,7 +11,7 @@ import { readFileSync } from 'fs';
 import {Endpoints} from "./common/Endpoints";
 import {setupLogs} from "./util/setupLogs";
 import {Context} from "../graphql/Context";
-import {resolvers} from "../graphql/resolvers";
+import {resolvers} from "./resolvers";
 import {getFriendFeed} from "./bereal-api/api";
 
 dotenv.config();

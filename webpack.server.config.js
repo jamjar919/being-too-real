@@ -4,8 +4,12 @@ const NodemonPlugin = require("nodemon-webpack-plugin");
 const SRC_DIR = "./src/";
 
 const include = [
-    path.resolve(__dirname, SRC_DIR),
+    path.resolve(__dirname, SRC_DIR + 'server'),
 ];
+
+const exclude = [
+    path.resolve(__dirname, SRC_DIR + 'client')
+]
 
 module.exports = {
     entry: "./src/server/index.ts",
@@ -19,8 +23,6 @@ module.exports = {
         extensions: [".ts", ".tsx", ".js"],
         extensionAlias: {
             ".js": [".js", ".ts"],
-            ".cjs": [".cjs", ".cts"],
-            ".mjs": [".mjs", ".mts"]
         }
     },
     module: {
@@ -29,6 +31,7 @@ module.exports = {
                 test: /\.tsx?$/,
                 loader: "ts-loader",
                 include,
+                exclude
             },
         ],
     },
