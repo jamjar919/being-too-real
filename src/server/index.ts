@@ -12,7 +12,7 @@ import {Endpoints} from "./common/Endpoints";
 import {setupLogs} from "./util/setupLogs";
 import {Context} from "../graphql/Context";
 import {resolvers} from "./resolvers";
-import {getFriendFeed} from "./bereal-api/api";
+import {getFriendFeed, getMemories} from "./bereal-api/api";
 
 dotenv.config();
 setupLogs();
@@ -53,6 +53,13 @@ app.get(Endpoints.BE_REAL, async (_, res) => {
 
     res.send(data);
 });
+
+app.get(Endpoints.MEMORIES, async (_, res) => {
+    const data = await getMemories();
+
+    res.send(data);
+});
+
 
 // Startup
 await new Promise<void>((resolve) => httpServer.listen(port, () => resolve()));

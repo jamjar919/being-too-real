@@ -65,7 +65,7 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<IndexProps>
 
     return {
         props: {
-            posts: data.posts
+            posts: data.posts.filter(post => !!post) as Post[]
         },
     };
 }
