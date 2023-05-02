@@ -30,6 +30,8 @@ class Session {
 
     public updateSession(accessToken: string, refreshToken: string) {
         try {
+
+            // Update session from file
             const data: string = JSON.stringify({
                 access_token: accessToken,
                 refresh_token: refreshToken
@@ -42,6 +44,9 @@ class Session {
                 data,
                 { encoding: "utf8" }
             );
+
+            // Reload the session to our variables
+            this.setTokens(accessToken, refreshToken)
         } catch (err) {
             console.error("Failed to write BeReal session to file: ", err);
             throw err;
@@ -66,12 +71,16 @@ class Session {
 
             console.log("Loaded session from file")
 
-            this.accessToken = access_token;
-            this.refreshToken = refresh_token;
+            this.setTokens(access_token, refresh_token)
         } catch (err) {
             console.error("Failed to load BeReal session from file: ", err);
             throw err;
         }
+    }
+
+    private setTokens(accessToken: string, refreshToken: string) {
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
     }
 }
 

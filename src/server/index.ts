@@ -14,6 +14,7 @@ import {Context} from "../graphql/Context";
 import {resolvers} from "./resolvers";
 import {getFriendFeed, getMemories} from "./bereal-api/api";
 import {MongoClient, ServerApiVersion} from "mongodb";
+import {Session} from "./util/session";
 
 dotenv.config();
 setupLogs();
@@ -92,6 +93,10 @@ app.get(Endpoints.MEMORIES, async (_, res) => {
     const data = await getMemories();
 
     res.send(data);
+});
+
+app.get(Endpoints.DEBUG, async (_, res) => {
+    res.send(Session.getSession().getRefreshToken());
 });
 
 // Startup
