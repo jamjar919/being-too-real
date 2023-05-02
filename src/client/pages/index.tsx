@@ -61,8 +61,6 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<IndexProps>
         query: GET_POST_LOCATIONS
     });
 
-    console.log(data);
-
     return {
         props: {
             posts: data.posts.filter(post => !!post) as Post[]

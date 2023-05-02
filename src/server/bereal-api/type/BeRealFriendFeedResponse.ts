@@ -1,66 +1,60 @@
-export type BeRealFriendFeedResponse = Array<{
-    id: string;
-    notificationID: string;
-    ownerID: string;
-    userName: string;
-    user: User;
-    mediaType: string;
+import {BeRealImage, BeRealLocation, BeRealUser} from "./BeRealCommon";
+
+export interface BeRealFriendFeedResponse {
+    userPosts: BeRealPostCollection;
+    friendsPosts?: BeRealPostCollection[];
+    remainingPosts: number;
+    maxPostsPerMoment: number;
+}
+export interface BeRealPostCollection {
+    user: BeRealUser;
     region: string;
-    bucket: string;
-    photoURL: string;
-    imageWidth: number;
-    imageHeight: number;
-    secondaryPhotoURL: string;
-    secondaryImageHeight: number;
-    secondaryImageWidth: number;
-    members?: (string)[] | null;
-    lateInSeconds: number;
-    isPublic: boolean;
-    location?: Location | null;
-    retakeCounter: number;
-    creationDate: DateOrCreationDateOrTakenAt;
-    updatedAt: number;
-    takenAt: DateOrCreationDateOrTakenAt;
-    comment?: (CommentEntity | null)[] | null;
-    realMojis?: (RealMojisEntity | null)[] | null;
-    screenshots?: (null)[] | null;
-    screenshotsV2?: (null)[] | null;
-    caption?: string | null;
+    momentId: string;
+    posts?: BeRealPost[] | null;
+}
+export interface BeRealPost {
+    id: string;
     visibility?: (string)[] | null;
-}>
-export interface User {
-    id: string;
-    username: string;
-    profilePicture?: ProfilePicture | null;
-}
-export interface ProfilePicture {
-    height: number;
-    width: number;
-    url: string;
-}
-export interface Location {
-    _latitude: number;
-    _longitude: number;
-}
-export interface DateOrCreationDateOrTakenAt {
-    _seconds: number;
-    _nanoseconds: number;
-}
-export interface CommentEntity {
-    id: string;
-    uid: string;
-    userName: string;
-    user: User;
-    text: string;
-    creationDate: DateOrCreationDateOrTakenAt;
+    primary: BeRealImage;
+    secondary: BeRealImage;
+    location?: BeRealLocation | null;
+    retakeCounter: number;
+    lateInSeconds: number;
+    isLate: boolean;
+    isMain: boolean;
+    realMojis?: (RealMojisEntity)[] | null;
+    comments?: (CommentsEntity | null)[] | null;
+    screenshots?: (null)[] | null;
+    takenAt: string;
+    creationDate: string;
+    updatedAt: string;
+    caption?: string | null;
+    music?: Music | null;
 }
 export interface RealMojisEntity {
     id: string;
-    uid: string;
-    userName: string;
-    user: User;
-    emoji: string;
+    user: BeRealUser;
+    media: BeRealImage;
     type: string;
-    uri: string;
-    date: DateOrCreationDateOrTakenAt;
+    emoji: string;
+    isInstant: boolean;
+    postedAt: string;
+}
+export interface CommentsEntity {
+    id: string;
+    user: BeRealUser;
+    content: string;
+    postedAt: string;
+}
+export interface Music {
+    isrc: string;
+    openUrl: string;
+    artist: string;
+    track: string;
+    preview: string;
+    visibility: string;
+    provider: string;
+    providerId: string;
+    artwork: string;
+    audioType: string;
 }

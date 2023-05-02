@@ -1,20 +1,13 @@
-type BeRealMemoryImageDetails = {
-    url: string,
-    width: number,
-    height: number
-}
+import {BeRealImage, BeRealLocation} from "./BeRealCommon";
 
 type BeRealMemory = {
     id: string,
-    thumbnail: BeRealMemoryImageDetails,
-    primary: BeRealMemoryImageDetails,
-    secondary: BeRealMemoryImageDetails,
+    thumbnail: BeRealImage,
+    primary: BeRealImage,
+    secondary: BeRealImage,
     isLate: boolean,
     memoryDay: `${number}-${number}-${number}`,
-    location: {
-        longitude: number,
-        latitude: number
-    } | null
+    location: BeRealLocation
 };
 
 type BeRealMemoriesResponse = {
