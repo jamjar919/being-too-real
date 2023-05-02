@@ -5,7 +5,7 @@ type Location {
     longitude: Float!
 }
 
-type MemoryImage {
+type Image {
     url: String!
     width: Int!
     height: Int!
@@ -13,9 +13,9 @@ type MemoryImage {
 
 type Memory {
     id: ID!
-    thumbnail: MemoryImage!
-    primary: MemoryImage!
-    secondary: MemoryImage!
+    thumbnail: Image!
+    primary: Image!
+    secondary: Image!
     isLate: Boolean!
     memoryDay: String!
     location: Location
@@ -24,12 +24,20 @@ type Memory {
 type User {
     id: String!
     username: String!
+    profilePicture: Image
 }
 
 type Post {
     id: ID!
     user: User!
+    primary: Image!
+    secondary: Image!
     location: Location
+    creationDate: String!
+    takenAt: String!
+    creationDate: String!
+    updatedAt: String!
+    caption: String
 }
 
 type Query {
