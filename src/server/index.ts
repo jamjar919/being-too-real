@@ -13,8 +13,9 @@ import {setupLogs} from "./util/setupLogs";
 import {Context} from "../graphql/Context";
 import {resolvers} from "./resolvers";
 import {getFriendFeed, getMemories} from "./bereal-api/api";
-import {MongoClient, ServerApiVersion} from "mongodb";
 import {Session} from "./util/session";
+import {pingDatabase} from "./database/health/pingDatabase";
+import {writeFriendsResponse} from "./database/write/writeFriendsResponse";
 
 dotenv.config();
 setupLogs();
@@ -23,11 +24,11 @@ const app = express();
 const httpServer = http.createServer(app);
 const port = process.env.PORT || 16000;
 
+/**
+ * GRAPHQL
+ */
 const typeDefs = readFileSync('./src/graphql/schema.graphql', { encoding: 'utf-8' });
 
-/**
- * APOLLO + GRAPHQL
- */
 const apolloServer = new ApolloServer<Context>({
     typeDefs,
     resolvers,
@@ -53,38 +54,17 @@ app.use(
 );
 
 /**
- * MONGO DB CONNECTION
+ * MONGO DB CONNECTION CHECK
  */
-const mongoUri: string = process.env.DB_CONNECTION_STRING ?? '';
-const client = new MongoClient(mongoUri, {
-    serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-    }
-});
-async function run() {
-    try {
-        // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
-        // Send a ping to confirm a successful connection
-        await client.db("admin").command({ ping: 1 });
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
-    } finally {
-        // Ensures that the client will close when you finish/error
-        await client.close();
-    }
-}
-run().catch(console.error);
-
+await pingDatabase();
 
 /**
  * REST API
- * (Mainly for debugging)
  */
-
-app.get(Endpoints.BE_REAL, async (_, res) => {
+app.get(Endpoints.POSTS, async (_, res) => {
     const data = await getFriendFeed();
+
+    await writeFriendsResponse(data);
 
     res.send(data);
 });

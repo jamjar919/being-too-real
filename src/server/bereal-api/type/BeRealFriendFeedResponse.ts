@@ -14,22 +14,22 @@ export interface BeRealPostCollection {
 }
 export interface BeRealPost {
     id: string;
-    visibility?: (string)[] | null;
+    visibility: (string)[] | null;
     primary: BeRealImage;
     secondary: BeRealImage;
-    location?: BeRealLocation | null;
+    location: BeRealLocation | null;
     retakeCounter: number;
     lateInSeconds: number;
     isLate: boolean;
     isMain: boolean;
-    realMojis?: (RealMojisEntity)[] | null;
-    comments?: (CommentsEntity | null)[] | null;
+    realMojis: (RealMojisEntity)[] | null;
+    comments: (CommentsEntity | null)[] | null;
     screenshots?: (null)[] | null;
     takenAt: string;
     creationDate: string;
     updatedAt: string;
-    caption?: string | null;
-    music?: Music | null;
+    caption: string | null;
+    music: Music | null;
 }
 export interface RealMojisEntity {
     id: string;

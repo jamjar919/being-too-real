@@ -1,5 +1,5 @@
 export const Endpoints = {
-    BE_REAL: "/posts",
+    POSTS: "/posts",
     MEMORIES: "/memories",
     DEBUG: "/debug"
 };
