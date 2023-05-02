@@ -11,8 +11,8 @@ const GET_POST_LOCATIONS = gql`
         posts {
             id
             location {
-                _latitude
-                _longitude
+                latitude
+                longitude
             }
             user {
                 username
@@ -37,8 +37,8 @@ const Index: React.FC<IndexProps> = (props: IndexProps) => {
     };
 
     const markers = posts.map(post => (post.location && <MapMarker
-        lat={post.location._latitude}
-        lng={post.location._longitude}
+        lat={post.location.latitude}
+        lng={post.location.longitude}
         text={post.user.username}
         key={post.user.username}
     />))

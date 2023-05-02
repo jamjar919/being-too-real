@@ -21,11 +21,6 @@ type Memory {
     location: Location
 }
 
-type PostLocation {
-    _latitude: Float!
-    _longitude: Float!
-}
-
 type User {
     id: String!
     username: String!
@@ -34,7 +29,7 @@ type User {
 type Post {
     id: ID!
     user: User!
-    location: PostLocation
+    location: Location
 }
 
 type Query {

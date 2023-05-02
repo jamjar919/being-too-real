@@ -42,14 +42,8 @@ export type MemoryImage = {
 export type Post = {
   __typename?: 'Post';
   id: Scalars['ID'];
-  location?: Maybe<PostLocation>;
+  location?: Maybe<Location>;
   user: User;
-};
-
-export type PostLocation = {
-  __typename?: 'PostLocation';
-  _latitude: Scalars['Float'];
-  _longitude: Scalars['Float'];
 };
 
 export type Query = {
@@ -144,7 +138,6 @@ export type ResolversTypes = ResolversObject<{
   Memory: ResolverTypeWrapper<Memory>;
   MemoryImage: ResolverTypeWrapper<MemoryImage>;
   Post: ResolverTypeWrapper<Post>;
-  PostLocation: ResolverTypeWrapper<PostLocation>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
   User: ResolverTypeWrapper<User>;
@@ -161,7 +154,6 @@ export type ResolversParentTypes = ResolversObject<{
   Memory: Memory;
   MemoryImage: MemoryImage;
   Post: Post;
-  PostLocation: PostLocation;
   Query: {};
   String: Scalars['String'];
   User: User;
@@ -194,14 +186,8 @@ export type MemoryImageResolvers<ContextType = Context, ParentType extends Resol
 
 export type PostResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  location?: Resolver<Maybe<ResolversTypes['PostLocation']>, ParentType, ContextType>;
+  location?: Resolver<Maybe<ResolversTypes['Location']>, ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
-export type PostLocationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PostLocation'] = ResolversParentTypes['PostLocation']> = ResolversObject<{
-  _latitude?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  _longitude?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -225,7 +211,6 @@ export type Resolvers<ContextType = Context> = ResolversObject<{
   Memory?: MemoryResolvers<ContextType>;
   MemoryImage?: MemoryImageResolvers<ContextType>;
   Post?: PostResolvers<ContextType>;
-  PostLocation?: PostLocationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   Username?: GraphQLScalarType;
