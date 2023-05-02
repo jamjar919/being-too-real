@@ -35,7 +35,6 @@ type Post {
     location: Location
     creationDate: String!
     takenAt: String!
-    creationDate: String!
     updatedAt: String!
     caption: String
 }

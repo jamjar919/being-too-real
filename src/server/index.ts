@@ -54,7 +54,7 @@ app.use(
 /**
  * MONGO DB CONNECTION
  */
-const mongoUri: string = process.env.DB_CONNECTION_STRING;
+const mongoUri: string = process.env.DB_CONNECTION_STRING ?? '';
 const client = new MongoClient(mongoUri, {
     serverApi: {
         version: ServerApiVersion.v1,
