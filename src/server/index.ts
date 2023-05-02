@@ -13,6 +13,7 @@ import {setupLogs} from "./util/setupLogs";
 import {Context} from "../graphql/Context";
 import {resolvers} from "./resolvers";
 import {getFriendFeed, getMemories} from "./bereal-api/api";
+import {Session} from "./util/session";
 
 dotenv.config();
 setupLogs();
@@ -60,6 +61,9 @@ app.get(Endpoints.MEMORIES, async (_, res) => {
     res.send(data);
 });
 
+app.get(Endpoints.DEBUG, async (_, res) => {
+    res.send(Session.getSession().getRefreshToken());
+});
 
 // Startup
 await new Promise<void>((resolve) => httpServer.listen(port, () => resolve()));

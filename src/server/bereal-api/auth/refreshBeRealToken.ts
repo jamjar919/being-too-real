@@ -1,16 +1,12 @@
 import fetch, {Response} from "node-fetch";
 import {BeRealRefreshTokenResponse} from "./type/BeRealRefreshTokenResponse";
+import {Session} from "../../util/session";
 
 const refreshBeRealToken = (): Promise<BeRealRefreshTokenResponse> => {
-    const currentRefreshToken = process.env.BEREAL_REFRESH_TOKEN;
     const clientSecret = process.env.CLIENT_SECRET;
 
     if (!clientSecret) {
         throw new Error("Environment variable CLIENT_SECRET missing!")
-    }
-
-    if (!currentRefreshToken) {
-        throw new Error("Environment variable BEREAL_REFRESH_TOKEN missing!")
     }
 
     const requestOptions = {
@@ -20,14 +16,23 @@ const refreshBeRealToken = (): Promise<BeRealRefreshTokenResponse> => {
             "grant_type": "refresh_token",
             "client_id": "ios",
             "client_secret": clientSecret,
-            "refresh_token": currentRefreshToken
+            "refresh_token": Session.getSession().getRefreshToken()
         })
     };
 
     return fetch(`https://auth.bereal.team/token?grant_type=refresh_token`, requestOptions)
         .then((response: Response) => response.json() as Promise<BeRealRefreshTokenResponse>)
         .then((data: BeRealRefreshTokenResponse) => {
+
+            if (!data || !data?.refresh_token || !data?.access_token) {
+                console.error("Refresh response did not contain the correct tokens", data)
+                throw new Error("Error refreshing session")
+            }
+
+            // Update session
             console.log('BeReal authentication token refreshed successfully.');
+            Session.getSession().updateSession(data.access_token, data.refresh_token);
+
             return data;
         })
 };
