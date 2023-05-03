@@ -1,9 +1,9 @@
 import {MongoImage} from "./MongoImage";
-import {WithId} from "mongodb";
 
-type MongoUser = WithId<{
+type MongoUser = {
+    _id: string,
     username: string;
     profilePicture: MongoImage | null;
-}>
+}
 
 export { MongoUser }

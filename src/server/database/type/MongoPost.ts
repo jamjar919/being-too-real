@@ -1,8 +1,8 @@
 import {MongoImage} from "./MongoImage";
 import {MongoLocation} from "./MongoLocation";
-import {WithId} from "mongodb";
 
-type MongoPost = WithId<{
+type MongoPost = {
+    _id: string,
     user: string,
     primary: MongoImage,
     secondary: MongoImage,
@@ -15,6 +15,6 @@ type MongoPost = WithId<{
     creationDate: string;
     updatedAt: string;
     caption: string | null,
-}>;
+};
 
 export { MongoPost }

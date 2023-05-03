@@ -39,8 +39,8 @@ const Index: React.FC<IndexProps> = (props: IndexProps) => {
     const markers = posts.map(post => (post.location && <MapMarker
         lat={post.location.latitude}
         lng={post.location.longitude}
-        text={post.user.username}
-        key={post.user.username}
+        text={post.user?.username ?? ''}
+        key={post.user?.id ?? ''}
     />))
 
     return (

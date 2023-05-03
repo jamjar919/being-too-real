@@ -15,6 +15,13 @@ export type Scalars = {
   Username: any;
 };
 
+export type Image = {
+  __typename?: 'Image';
+  height: Scalars['Int'];
+  url: Scalars['String'];
+  width: Scalars['Int'];
+};
+
 export type Location = {
   __typename?: 'Location';
   latitude: Scalars['Float'];
@@ -27,34 +34,37 @@ export type Memory = {
   isLate: Scalars['Boolean'];
   location?: Maybe<Location>;
   memoryDay: Scalars['String'];
-  primary: MemoryImage;
-  secondary: MemoryImage;
-  thumbnail: MemoryImage;
-};
-
-export type MemoryImage = {
-  __typename?: 'MemoryImage';
-  height: Scalars['Int'];
-  url: Scalars['String'];
-  width: Scalars['Int'];
+  primary: Image;
+  secondary: Image;
+  thumbnail: Image;
 };
 
 export type Post = {
   __typename?: 'Post';
+  caption?: Maybe<Scalars['String']>;
+  creationDate: Scalars['String'];
   id: Scalars['ID'];
   location?: Maybe<Location>;
-  user: User;
+  primary: Image;
+  secondary: Image;
+  takenAt: Scalars['String'];
+  updatedAt: Scalars['String'];
+  user?: Maybe<User>;
+  userId: Scalars['ID'];
 };
 
 export type Query = {
   __typename?: 'Query';
   memories: Array<Maybe<Memory>>;
   posts: Array<Maybe<Post>>;
+  users: Array<Maybe<User>>;
 };
 
 export type User = {
   __typename?: 'User';
-  id: Scalars['String'];
+  id: Scalars['ID'];
+  posts?: Maybe<Array<Maybe<Post>>>;
+  profilePicture?: Maybe<Image>;
   username: Scalars['String'];
 };
 
@@ -133,10 +143,10 @@ export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  Image: ResolverTypeWrapper<Image>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Location: ResolverTypeWrapper<Location>;
   Memory: ResolverTypeWrapper<Memory>;
-  MemoryImage: ResolverTypeWrapper<MemoryImage>;
   Post: ResolverTypeWrapper<Post>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -149,15 +159,22 @@ export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
   Float: Scalars['Float'];
   ID: Scalars['ID'];
+  Image: Image;
   Int: Scalars['Int'];
   Location: Location;
   Memory: Memory;
-  MemoryImage: MemoryImage;
   Post: Post;
   Query: {};
   String: Scalars['String'];
   User: User;
   Username: Scalars['Username'];
+}>;
+
+export type ImageResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Image'] = ResolversParentTypes['Image']> = ResolversObject<{
+  height?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  width?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type LocationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Location'] = ResolversParentTypes['Location']> = ResolversObject<{
@@ -171,33 +188,36 @@ export type MemoryResolvers<ContextType = Context, ParentType extends ResolversP
   isLate?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   location?: Resolver<Maybe<ResolversTypes['Location']>, ParentType, ContextType>;
   memoryDay?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  primary?: Resolver<ResolversTypes['MemoryImage'], ParentType, ContextType>;
-  secondary?: Resolver<ResolversTypes['MemoryImage'], ParentType, ContextType>;
-  thumbnail?: Resolver<ResolversTypes['MemoryImage'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
-export type MemoryImageResolvers<ContextType = Context, ParentType extends ResolversParentTypes['MemoryImage'] = ResolversParentTypes['MemoryImage']> = ResolversObject<{
-  height?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  width?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  primary?: Resolver<ResolversTypes['Image'], ParentType, ContextType>;
+  secondary?: Resolver<ResolversTypes['Image'], ParentType, ContextType>;
+  thumbnail?: Resolver<ResolversTypes['Image'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type PostResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = ResolversObject<{
+  caption?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   location?: Resolver<Maybe<ResolversTypes['Location']>, ParentType, ContextType>;
-  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  primary?: Resolver<ResolversTypes['Image'], ParentType, ContextType>;
+  secondary?: Resolver<ResolversTypes['Image'], ParentType, ContextType>;
+  takenAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  userId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   memories?: Resolver<Array<Maybe<ResolversTypes['Memory']>>, ParentType, ContextType>;
   posts?: Resolver<Array<Maybe<ResolversTypes['Post']>>, ParentType, ContextType>;
+  users?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>;
 }>;
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
-  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  posts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Post']>>>, ParentType, ContextType>;
+  profilePicture?: Resolver<Maybe<ResolversTypes['Image']>, ParentType, ContextType>;
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -207,9 +227,9 @@ export interface UsernameScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 }
 
 export type Resolvers<ContextType = Context> = ResolversObject<{
+  Image?: ImageResolvers<ContextType>;
   Location?: LocationResolvers<ContextType>;
   Memory?: MemoryResolvers<ContextType>;
-  MemoryImage?: MemoryImageResolvers<ContextType>;
   Post?: PostResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;

@@ -11,7 +11,7 @@ import { readFileSync } from 'fs';
 import {Endpoints} from "./common/Endpoints";
 import {setupLogs} from "./util/setupLogs";
 import {Context} from "../graphql/Context";
-import {resolvers} from "./resolvers";
+import {resolvers} from "./resolver/resolvers";
 import {getFriendFeed, getMemories} from "./bereal-api/api";
 import {Session} from "./util/session";
 import {pingDatabase} from "./database/health/pingDatabase";

@@ -1,7 +1,6 @@
 import {MongoPost} from "../type/MongoPost";
 import {BeRealUser} from "../../bereal-api/type/BeRealCommon";
 import {BeRealPost} from "../../bereal-api/type/BeRealFriendFeedResponse";
-import {ObjectId} from "mongodb";
 import {convertImage} from "./convertImage";
 import {convertLocation} from "./convertLocation";
 
@@ -10,7 +9,7 @@ const convertPost = (
     post: BeRealPost
 ): MongoPost => ({
     // Unique post id
-    _id: post.id as ObjectId,
+    _id: post.id,
 
     // Unique user id for the user that made the post
     user: user.id,

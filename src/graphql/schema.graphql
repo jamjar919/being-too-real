@@ -22,14 +22,16 @@ type Memory {
 }
 
 type User {
-    id: String!
+    id: ID!
     username: String!
     profilePicture: Image
+    posts: [Post]
 }
 
 type Post {
     id: ID!
-    user: User!
+    userId: ID!
+    user: User
     primary: Image!
     secondary: Image!
     location: Location
@@ -41,5 +43,6 @@ type Post {
 
 type Query {
     memories: [Memory]!
+    users: [User]!
     posts: [Post]!
 }
