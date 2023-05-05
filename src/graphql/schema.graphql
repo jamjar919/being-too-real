@@ -44,5 +44,6 @@ type Post {
 type Query {
     memories: [Memory]!
     users: [User]!
+    user(id: ID!): User
     posts: [Post]!
 }

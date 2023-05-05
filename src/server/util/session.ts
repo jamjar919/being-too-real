@@ -36,9 +36,7 @@ class Session {
                 access_token: accessToken,
                 refresh_token: refreshToken
             });
-
-            console.log("Updating current session with:" + data)
-
+            
             fs.writeFileSync(
                 SESSION_FILE_NAME,
                 data,

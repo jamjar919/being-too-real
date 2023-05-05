@@ -3,21 +3,19 @@ import {BeRealUser} from "../../bereal-api/type/BeRealCommon";
 import {MongoUser} from "../type/MongoUser";
 import {convertUser} from "../converter/convertUser";
 
-const writeUser = (user: BeRealUser): Promise<void> => {
+const writeUser = async (user: BeRealUser): Promise<string | null> => {
     const document: MongoUser = convertUser(user);
 
-    return userCollection.findOne({ _id: document._id })
-        .then((result: MongoUser | null) => {
+    const maybeUser = await userCollection.findOne({ _id: document._id })
 
-            // If we already wrote the user don't write it again
-            if (result) {
-                console.log(`Skipping writing user ${result._id} as it was already found`)
-                return;
-            }
+    // If we already wrote the user don't write it again
+    if (maybeUser) {
+        return null;
+    }
 
-            return userCollection.insertOne(document);
-        })
-        .then(() => {}) // Return void
+    await userCollection.insertOne(document);
+
+    return user.username;
 }
 
 export { writeUser }

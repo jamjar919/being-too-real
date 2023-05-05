@@ -4,24 +4,21 @@ import {BeRealUser} from "../../bereal-api/type/BeRealCommon";
 import {MongoPost} from "../type/MongoPost";
 import {convertPost} from "../converter/convertPost";
 
-const writePost = (
+const writePost = async (
     user: BeRealUser,
     post: BeRealPost
-): Promise<void> => {
+): Promise<string | null> => {
     const document: MongoPost = convertPost(user, post);
 
-    return postCollection.findOne({ _id: document._id })
-        .then((result: MongoPost | null) => {
+    const maybePost = await postCollection.findOne({ _id: document._id });
 
-            // If we already wrote the post don't write it again
-            if (result) {
-                console.log(`Skipping writing post ${result._id} as it was already found`)
-                return;
-            }
+    // If we already wrote the post don't write it again
+    if (maybePost) {
+        return null;
+    }
 
-            return postCollection.insertOne(document);
-        })
-        .then(() => {}) // Return void
+    return postCollection.insertOne(document)
+        .then(insert => insert.insertedId);
 }
 
 export { writePost }
