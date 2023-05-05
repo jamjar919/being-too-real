@@ -1,10 +1,11 @@
 import React from "react";
 import { gql } from '@apollo/client';
 import client from "../common/ApolloClient";
-import {Post, Query} from "../../graphql/generated/Resolver";
+import {Post, Query, User} from "../../graphql/generated/Resolver";
 import {GetStaticPropsResult} from "next";
-import GoogleMapReact from 'google-map-react';
-import {MapMarker} from "../common/component/map-marker/MapMarker";
+import {Map} from "../common/component/map/Map";
+import {MapContextProvider} from "../common/context/MapContext";
+import {SelectUserModal} from "../common/component/select-user-modal/SelectUserModal";
 
 const GET_POST_LOCATIONS = gql`
     query Posts {
@@ -17,42 +18,44 @@ const GET_POST_LOCATIONS = gql`
             user {
                 username
             }
+            primary {
+                url
+            }
+            secondary {
+                url
+            }
+        }
+        users {
+            username,
+            posts {
+                id,
+                caption,
+                primary {
+                    url
+                }
+                secondary {
+                    url
+                }
+            }
         }
     }
 `;
 
 type IndexProps = {
-    posts: Post[]
+    posts: Post[],
+    users: User[]
 }
 
 const Index: React.FC<IndexProps> = (props: IndexProps) => {
-    const { posts } = props;
-
-    const defaultProps = {
-        center: {
-            lat: 51.752054,
-            lng: -1.257775
-        },
-        zoom: 11
-    };
-
-    const markers = posts.map(post => (post.location && <MapMarker
-        lat={post.location.latitude}
-        lng={post.location.longitude}
-        text={post.user?.username ?? ''}
-        key={post.user?.id ?? ''}
-    />))
+    const { posts, users } = props;
 
     return (
-        <div style={{ height: '100vh', width: '100%', position: "relative" }}>
-            <GoogleMapReact
-                bootstrapURLKeys={{ key: "" }}
-                defaultCenter={defaultProps.center}
-                defaultZoom={defaultProps.zoom}
-            >
-                {markers}
-            </GoogleMapReact>
-        </div>
+        <MapContextProvider posts={posts} users={users} >
+            <div style={{ height: '100vh', width: '100%', position: "relative" }}>
+                <Map />
+            </div>
+            <SelectUserModal />
+        </MapContextProvider>
     )
 }
 
@@ -63,7 +66,8 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<IndexProps>
 
     return {
         props: {
-            posts: data.posts.filter(post => !!post) as Post[]
+            posts: data.posts.filter(post => !!post) as Post[],
+            users: data.users as User[]
         },
     };
 }

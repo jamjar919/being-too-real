@@ -1,6 +1,26 @@
 .mapMarker {
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: red;
+  cursor: pointer;
+}
+
+.icon {
+  border: 1px solid white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  background-size: cover;
+  background-position: center;
+}
+
+.banner {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+}
+
+.bannerContent {
+  background: black;
+  color: white;
+  margin: auto;
 }

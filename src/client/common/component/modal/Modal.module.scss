@@ -1,0 +1,43 @@
+$color: white;
+$background: black;
+
+.modal {
+  color: $color;
+  position: absolute;
+  border: 1px solid $color;
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+}
+
+.modalHeader {
+  border-bottom: 1px solid $color;
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+}
+
+.modalTitle {
+  flex: 1 1;
+  padding: 5px;
+}
+
+.modalExpand {
+  border-left: 1px solid $color;
+  button {
+    height: 100%;
+  }
+}
+
+.modalContent {
+  height: 0;
+  will-change: height;
+  transition: height ease-in-out .25s;
+  overflow: hidden;
+}
+
+.modalDragIcon {
+  cursor: move;
+  border-right: 1px solid $color;
+  padding: 5px;
+}
