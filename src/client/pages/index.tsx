@@ -5,8 +5,8 @@ import {Post, Query, User} from "../../graphql/generated/Resolver";
 import {GetStaticPropsResult} from "next";
 import {Map} from "../common/component/map/Map";
 import {MapContextProvider} from "../common/context/MapContext";
-import {SelectUserModal} from "../common/component/select-user-modal/SelectUserModal";
-import {SelectedUserModal} from "../common/component/selected-user-modal/SelectedUserModal";
+import {SelectContextProvider} from "../common/context/SelectContext";
+import {ModalManager} from "../common/component/modal-manager/ModalManager";
 
 const GET_POST_LOCATIONS = gql`
     query Posts {
@@ -60,13 +60,14 @@ const Index: React.FC<IndexProps> = (props: IndexProps) => {
     const { posts, users } = props;
 
     return (
-        <MapContextProvider posts={posts} users={users} >
-            <div style={{ height: '100vh', width: '100%', position: "relative" }}>
-                <Map />
-            </div>
-            <SelectUserModal />
-            <SelectedUserModal />
-        </MapContextProvider>
+        <SelectContextProvider posts={posts} users={users}>
+            <MapContextProvider>
+                <div style={{ height: '100vh', width: '100%', position: "relative" }}>
+                    <Map />
+                </div>
+                <ModalManager />
+            </MapContextProvider>
+        </SelectContextProvider>
     )
 }
 

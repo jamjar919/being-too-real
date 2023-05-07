@@ -1,26 +1,29 @@
 import React from "react";
 import {Modal} from "../modal/Modal";
-import {useMapContext} from "../../context/MapContext";
 import {SinglePost} from "../post/SinglePost";
+import {User} from "../../../../graphql/generated/Resolver";
+import {useSelectContext} from "../../context/SelectContext";
 
-const SelectedUserModal: React.FC = () => {
-    const { selectUser, selectedUser } = useMapContext();
+type SelectedUserModalProps = {
+    user: User;
+}
 
-    if(!selectedUser) {
-        return null;
-    }
+const SelectedUserModal: React.FC<SelectedUserModalProps> = (props) => {
+    const { user } = props
+
+    const { deselectUser } = useSelectContext();
 
     return (
         <Modal
-            title={selectedUser.username}
+            title={user.username}
             width={300}
             height={500}
             initialPosition={[320, 10]}
             closable
-            onClose={() => selectUser(null)}
+            onClose={() => deselectUser(user.id)}
         >
             <div style={{ height: "100%", overflow: "scroll" }}>
-                {selectedUser.posts!.map(post => {
+                {user.posts!.map(post => {
                     if (!post) {
                         return null;
                     }

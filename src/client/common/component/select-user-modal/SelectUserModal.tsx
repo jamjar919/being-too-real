@@ -3,9 +3,16 @@ import {Modal} from "../modal/Modal";
 import {useMapContext} from "../../context/MapContext";
 import {SelectUserButton} from "./SelectUserButton";
 import {User} from "../../../../graphql/generated/Resolver";
+import {useSelectContext} from "../../context/SelectContext";
 
-const SelectUserModal: React.FC = () => {
-    const { users, selectUser } = useMapContext();
+type SelectUserModalProps = {
+    users: User[]
+}
+
+const SelectUserModal: React.FC<SelectUserModalProps> = (props) => {
+    const { users } = props;
+
+    const { selectUser } = useSelectContext();
 
     const [height, setHeight] = useState(500);
     useLayoutEffect(() => {
