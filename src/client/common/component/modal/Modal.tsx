@@ -9,7 +9,8 @@ type ModalProps = {
     width: number;
     height: number;
     order?: number;
-    reverse?: boolean
+    closable?: boolean;
+    onClose?: () => void;
 }
 
 const Modal: React.FC<ModalProps> = (props) => {
@@ -19,7 +20,9 @@ const Modal: React.FC<ModalProps> = (props) => {
         initialPosition,
         width,
         height,
-        order
+        order,
+        closable,
+        onClose
     } = props;
 
     const [visible, setVisible] = useState(true);
@@ -66,11 +69,16 @@ const Modal: React.FC<ModalProps> = (props) => {
                 <i className={styles.modalTitle}>
                     {title ? title : ''}
                 </i>
-                <div className={styles.modalExpand}>
+                <div className={styles.modalButton}>
                     <button onClick={() => setExpanded((current) => !current)}>
                         {expanded ? '^' : 'v'}
                     </button>
                 </div>
+                {closable && (
+                    <div className={styles.modalButton}>
+                        <button onClick={() => onClose?.()}>x</button>
+                    </div>
+                )}
             </div>
             <div
                 className={styles.modalContent}

@@ -1,9 +1,11 @@
 import React, {useLayoutEffect, useState} from "react";
 import {Modal} from "../modal/Modal";
 import {useMapContext} from "../../context/MapContext";
+import {SelectUserButton} from "./SelectUserButton";
+import {User} from "../../../../graphql/generated/Resolver";
 
 const SelectUserModal: React.FC = () => {
-    const { users } = useMapContext();
+    const { users, selectUser } = useMapContext();
 
     const [height, setHeight] = useState(500);
     useLayoutEffect(() => {
@@ -18,7 +20,13 @@ const SelectUserModal: React.FC = () => {
             initialPosition={[10, 10]}
         >
             <ul>
-                {users.map((user) => (<li>{user.username}</li>))}
+                {users.map((user: User) => (
+                    <SelectUserButton
+                        onClick={() => selectUser(user.id)}
+                        user={user}
+                        key={user.id}
+                    />
+                ))}
             </ul>
         </Modal>
     )

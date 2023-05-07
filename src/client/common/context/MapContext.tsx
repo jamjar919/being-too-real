@@ -5,7 +5,7 @@ type MapContext = {
     users: User[],
     selectedUser: User | null,
     selectedPosts: Post[],
-    selectUser: (userId: string) => void
+    selectUser: (userId: string | null) => void
 };
 
 const Context = React.createContext<MapContext>({} as any);
@@ -19,7 +19,7 @@ type MapContextProviderProps = {
 const MapContextProvider: React.FC<MapContextProviderProps> = (props) => {
     const { posts, users, children } = props;
 
-    const [selectedUserId, selectUser] = useState("")
+    const [selectedUserId, selectUser] = useState<string | null>(null);
 
     const selectedUser = users.find((user: User) => user.id === selectedUserId) ?? null;
     const selectedPosts: Post[] = selectedUser

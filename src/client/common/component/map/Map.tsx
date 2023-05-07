@@ -18,7 +18,7 @@ const Map: React.FC = () => {
         .map(post => (post.location && <MapMarker
             lat={post.location.latitude}
             lng={post.location.longitude}
-            key={post.user?.id}
+            key={post.id}
             post={post}
         />))
 

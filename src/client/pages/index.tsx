@@ -6,6 +6,7 @@ import {GetStaticPropsResult} from "next";
 import {Map} from "../common/component/map/Map";
 import {MapContextProvider} from "../common/context/MapContext";
 import {SelectUserModal} from "../common/component/select-user-modal/SelectUserModal";
+import {SelectedUserModal} from "../common/component/selected-user-modal/SelectedUserModal";
 
 const GET_POST_LOCATIONS = gql`
     query Posts {
@@ -26,9 +27,18 @@ const GET_POST_LOCATIONS = gql`
             }
         }
         users {
+            id,
             username,
             posts {
                 id,
+                location {
+                    latitude
+                    longitude
+                }
+                user {
+                    username
+                }
+                takenAt,
                 caption,
                 primary {
                     url
@@ -55,6 +65,7 @@ const Index: React.FC<IndexProps> = (props: IndexProps) => {
                 <Map />
             </div>
             <SelectUserModal />
+            <SelectedUserModal />
         </MapContextProvider>
     )
 }
