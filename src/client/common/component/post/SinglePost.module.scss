@@ -1,0 +1,16 @@
+.postImagesContainer {
+  position: relative;
+  width: 100%;
+
+  .primary {
+    max-width: 100%;
+  }
+
+  .secondary {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    max-width: 25%;
+    cursor: pointer;
+  }
+}

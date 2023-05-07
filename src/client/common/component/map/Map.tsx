@@ -4,15 +4,7 @@ import {MapMarker} from "../map-marker/MapMarker";
 import {useMapContext} from "../../context/MapContext";
 
 const Map: React.FC = () => {
-    const { selectedPosts } = useMapContext();
-
-    const defaultProps = {
-        center: {
-            lat: 51.752054,
-            lng: -1.257775
-        },
-        zoom: 11
-    };
+    const { selectedPosts, mapCenter } = useMapContext();
 
     const markers = selectedPosts
         .map(post => (post.location && <MapMarker
@@ -26,7 +18,7 @@ const Map: React.FC = () => {
         <GoogleMapReact
             bootstrapURLKeys={{ key: "" }}
             defaultCenter={defaultProps.center}
-            defaultZoom={defaultProps.zoom}
+            defaultZoom={11}
         >
             {markers}
         </GoogleMapReact>

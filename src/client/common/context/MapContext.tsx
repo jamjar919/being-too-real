@@ -1,11 +1,14 @@
 import React, {ReactNode, useState} from "react";
 import {Post, User} from "../../../graphql/generated/Resolver";
+import {Coords} from "google-map-react";
 
 type MapContext = {
     users: User[],
     selectedUser: User | null,
     selectedPosts: Post[],
-    selectUser: (userId: string | null) => void
+    selectUser: (userId: string | null) => void,
+    mapCenter: Coords,
+    setMapCenter: (coords: Coords) => void
 };
 
 const Context = React.createContext<MapContext>({} as any);
@@ -26,11 +29,18 @@ const MapContextProvider: React.FC<MapContextProviderProps> = (props) => {
         ? selectedUser.posts as Post[]
         : posts;
 
+    const [mapCenter, setMapCenter] = useState({
+        lat: 51.752054,
+        lng: -1.257775
+    })
+
     const context = {
         users,
         selectedUser,
         selectedPosts,
-        selectUser
+        selectUser,
+        mapCenter,
+        setMapCenter
     };
 
     return <Context.Provider value={context}>{children}</Context.Provider>;

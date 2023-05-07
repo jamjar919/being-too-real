@@ -1,6 +1,7 @@
 import React from "react";
 import {Modal} from "../modal/Modal";
 import {useMapContext} from "../../context/MapContext";
+import {SinglePost} from "../post/SinglePost";
 
 const SelectedUserModal: React.FC = () => {
     const { selectUser, selectedUser } = useMapContext();
@@ -24,16 +25,7 @@ const SelectedUserModal: React.FC = () => {
                         return null;
                     }
 
-                    return (
-                        <div key={post.id}>
-                            <img
-                                src={post.primary.url}
-                                alt={`${selectedUser.username}'s BeReal taken on ${post.takenAt}`}
-                                style={{ maxWidth: '100%' }}
-                            />
-                            <i>{post.takenAt} - {post.caption}</i>
-                        </div>
-                    )
+                    return (<SinglePost post={post} key={post.id} />)
                 })}
             </div>
         </Modal>

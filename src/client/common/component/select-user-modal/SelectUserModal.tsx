@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState} from "react";
+import React, {ChangeEvent, useLayoutEffect, useState} from "react";
 import {Modal} from "../modal/Modal";
 import {useMapContext} from "../../context/MapContext";
 import {SelectUserButton} from "./SelectUserButton";
@@ -12,6 +12,10 @@ const SelectUserModal: React.FC = () => {
         setHeight(window.innerHeight - 50)
     }, [])
 
+    const [searchText, setSearchText] = useState<string | undefined>("");
+
+    const filteredUsers = users.filter((user) =>  searchText ? user.username.includes(searchText) : true);
+
     return (
         <Modal
             title="Users"
@@ -19,8 +23,14 @@ const SelectUserModal: React.FC = () => {
             height={height}
             initialPosition={[10, 10]}
         >
+            <input
+                type="text"
+                placeholder={"Search"}
+                value={searchText}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchText(e.target.value)}
+            />
             <ul>
-                {users.map((user: User) => (
+                {filteredUsers.map((user: User) => (
                     <SelectUserButton
                         onClick={() => selectUser(user.id)}
                         user={user}
