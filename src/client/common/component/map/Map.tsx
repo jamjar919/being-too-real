@@ -15,10 +15,9 @@ const Map: React.FC = () => {
             ...selectedPosts,
             ...selectedUsers.flatMap(user => user.posts)
         ]
-        .filter((post: Post | null) => !!post)
-        .map(post => post as Post)
+        .filter((post: Post | null | undefined) => !!post) as Post[]
     }
-    
+
     const markers = postsToShowOnMap
         .map(post => (post.location && <MapMarker
             lat={post.location.latitude}
