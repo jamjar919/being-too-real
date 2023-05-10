@@ -11,7 +11,7 @@ type SelectUserModalProps = {
 const SelectUserModal: React.FC<SelectUserModalProps> = (props) => {
     const { users } = props;
 
-    const { selectUser } = useSelectContext();
+    const { selectUser, deselectUser, isUserSelected } = useSelectContext();
 
     const [height, setHeight] = useState(500);
     useLayoutEffect(() => {
@@ -36,13 +36,27 @@ const SelectUserModal: React.FC<SelectUserModalProps> = (props) => {
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchText(e.target.value)}
             />
             <ul>
-                {filteredUsers.map((user: User) => (
-                    <SelectUserButton
-                        onClick={() => selectUser(user.id)}
-                        user={user}
-                        key={user.id}
-                    />
-                ))}
+                {filteredUsers.map((user: User) => {
+                    const isSelected = isUserSelected(user.id);
+
+                    const handleClick = () => {
+                        if (isSelected) {
+                            deselectUser(user.id)
+                            return
+                        }
+
+                        selectUser(user.id);
+                    }
+
+                    return (
+                        <SelectUserButton
+                            onClick={handleClick}
+                            user={user}
+                            isSelected={isSelected}
+                            key={user.id}
+                        />
+                    )
+                })}
             </ul>
         </Modal>
     )

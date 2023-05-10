@@ -14,9 +14,7 @@ const SinglePost: React.FC<PostProps> = (props) => {
         primary: post.primary,
         secondary: post.secondary
     });
-
-    console.log(images.primary.url, images.secondary.url);
-
+    
     return (
         <>
             <div className={styles.postImagesContainer}>

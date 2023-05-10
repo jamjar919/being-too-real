@@ -6,6 +6,7 @@ type SelectContext = {
     selectedUsers: User[],
     selectUser: (userId: string) => void,
     deselectUser: (userId: string) => void,
+    isUserSelected: (userId: string) => boolean,
 
     posts: Post[]
     selectedPosts: Post[],
@@ -43,6 +44,8 @@ const SelectContextProvider: React.FC<SelectContextProps> = (props) => {
         });
     }
 
+    const isUserSelected = (userId: string): boolean => selectedUserIds.has(userId);
+
     // Post management
     const [selectedPostIds, setSelectedPostIds] = useState<Set<string>>(new Set());
 
@@ -71,6 +74,7 @@ const SelectContextProvider: React.FC<SelectContextProps> = (props) => {
         deselectUser,
         selectPost,
         deselectPost,
+        isUserSelected,
         posts,
         users,
         selectedPosts,
